@@ -1,0 +1,44 @@
+#!/usr/bin/python
+import os
+import platform
+
+AddOption('--enable-debug',
+        dest='enable_debug',
+        nargs='?', type='string',
+        action='store',
+        const='yes',
+        help='enable debug build')
+build_mode='release'
+if GetOption('enable_debug'):
+    build_mode='debug'
+
+env = Environment()
+
+mpicxx = "/usr/bin/mpicxx"
+sources = Split("""
+        LR_cell.cpp
+        LR_lattice.cpp
+        main.cpp
+        parallel.cpp
+        """)
+
+env.Replace(CXX = mpicxx)
+
+if ('release' == build_mode):
+    env.MergeFlags(['-O3'])
+else:
+    env.MergeFlags(['-O0', '-g'])
+
+
+if ('Linux' == platform.system()):
+    env.MergeFlags(['-DOS_LINUX'])
+elif ('Windows' == platform.system()):
+    env.MergeFlags(['-DOS_WINDOWS'])
+else:
+    raise SCons.Errors.StopError("Unknows target OS")
+
+obj_list = env.Object(source = sources)
+p = env.Program(target = 'LR_latt_2D', source = obj_list)
+inst = env.Install('install',[p])
+
+
