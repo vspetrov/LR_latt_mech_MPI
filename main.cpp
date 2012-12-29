@@ -16,6 +16,10 @@ short *convert_buf = NULL;
 int main(int argc, char *argv[])
 {
 	double t1,t2,duration;
+    
+    if (argc > 1){
+        Size = atoi(argv[argc-1]);
+    }
 	MPI_Init(&argc, &argv);
 	MPI_Comm_size(MPI_COMM_WORLD, &ProcNum);//Number of processes
 	MPI_Comm_rank(MPI_COMM_WORLD, &ProcRank);//Rank of process

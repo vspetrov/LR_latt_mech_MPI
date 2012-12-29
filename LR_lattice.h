@@ -1,7 +1,7 @@
 #ifndef LR_LATTICE_H
 #define LR_LATTICE_H
 #include "parallel.h"
-extern const int Size; //Lattice dimensions
+extern int Size; //Lattice dimensions
 
 
 struct CellVariables //Phase space variables of one cell

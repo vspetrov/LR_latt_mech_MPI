@@ -7,7 +7,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-const int Size=400;
+int Size=600;
 
 int DrawNum = 5;
 
